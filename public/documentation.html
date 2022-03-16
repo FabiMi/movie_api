@@ -20,7 +20,124 @@
         well-designed REST API and architected database built using JavaScript, Node.js,
          Express, and MongoDB. The REST API will be accessed via commonly used HTTP methods 
          like GET and POST. Similar methods (CRUD) will be used to retrieve data from your database 
-         #and store that data in a non-relational way.</p><br>    
+         #and store that data in a non-relational way.</p><br>
+         
+         
+
+
+
+         <h2>URL Endpoints for my Movie Api</h2>
+
+         <table>
+             <tr>
+            <th>Request</th>
+            <th>URL</th>
+            <th>Response Data</th>
+            <th>HTTP Method</th>
+            <th>Query Param</th>
+            <th>Request Data</th>
+            </tr>
+            <tr>
+                <td>Return a list of ALL movies to the user </td>
+                <td>/movies</td>
+                <td>A JSON object holding data about all the movies</td>
+                <td>GET</td>
+                <td></td>
+                <td>none</td>
+            </tr>
+            <tr>
+                <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the use</td>
+                <td>/movies/:title</td>
+                <td>A JSON object holding data about a single movie, Example: {
+                    title: 'The Matrix',
+                    direktor: 'Lana Wachowski',
+                    id: '1',
+                    rating: '9/10',
+                    genre: 'SciFI'
+                  }</td>
+                <td>GET</td>
+                <td></td>
+                <td>none</td>
+            </tr>
+            <tr>
+                <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
+                <td>/movies/genre/:title</td>
+                <td>A JSON object holding data about a genre</td>
+                <td>GET</td>
+                <td></td>
+                <td>none</td>
+            </tr>
+            <tr>
+                <td>Return data about a director (bio, birth year, death year) by name</td>
+                <td>/movies/director/:name</td>
+                <td>A JSON object holding data about a director</td>
+                <td>GET</td>
+                <td></td>
+                <td>none</td>
+            </tr>
+            <tr>
+                <td>Allow new users to register</td>
+                <td>/users</td>
+                <td>A JSON object holding data about the User that was added, including an ID:
+                    {
+                    name : "Fabian Michaelis", age : 37,
+                    U-ID: 1 
+                   }</td>
+                <td>POST</td>
+                <td></td>
+                <td>A JSON object holding data about the new to add, structured like:
+                    {
+                    name : "Fabian Michaelis", age : 37 
+                   }
+                    </td>
+            </tr>
+            <tr>
+                <td>Allow users to update their user info (username)</td>
+                <td>/users/:name</td>
+                <td>A text message indicating the username was updated</td>
+                <td>PUT</td>
+                <td></td>
+                <td>none</td>
+            </tr>
+            <tr>
+                <td>Allow users to add a movie to their list of favorites</td>
+                <td>/users/:name/movies/[favorites]</td>
+                <td> A JSON object holding data about the favorite Movies from a User to add inkluding an ID, structured like:{
+                    1.: 'The Matrix' M-ID:1 , 2.: 'Lord of the Rings' M-ID:2 etc. </td>
+                <td>POST</td>
+                <td></td>
+                <td> A JSON object holding data about the favorite Movies from a User to add, structured like:{
+                    1.: 'The Matrix', 2.: 'Lord of the Rings' etc. 
+                     },
+                </td>
+            </tr>
+            <tr>
+                <td>Allow users to remove a movie from their list of favorites</td>
+                <td>/users/:name/movies/:title</td>
+                <td>A text message indicating whether the Movie was successfully removed from the Favorit Movie List</td>
+                <td>DELETE</td>
+                <td></td>
+                <td>none</td>
+            </tr>
+            <tr>
+                <td>Allow existing users to deregister</td>
+                <td>/users/:name</td>
+                <td>A Textmassage indicating that the User was deleted</td>
+                <td>DELETE</td>
+                <td></td>
+                <td>none</td>
+            </tr>
+            <tbody>
+            </tbody>
+
+
+
+
+
+
+
+         </table>
+        
 </body>
 </html>
 
