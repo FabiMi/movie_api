@@ -40,7 +40,23 @@
             <tr>
                 <td>Return a list of ALL movies to the user </td>
                 <td>/movies</td>
-                <td>A JSON object holding data about all the movies</td>
+                <td>A JSON object holding data about all the movies structured like:
+    Title: "",
+  Description: "",
+  Genre: {
+    Name: "",
+    Description: ""
+  },
+  Director: {
+    Name: "",
+    Bio: "",
+    Birth: "",
+    Death: ""
+  },
+  ImagePath: "",
+  Featured: true
+
+                </td>
                 <td>GET</td>
                 <td></td>
                 <td>none</td>
@@ -49,11 +65,7 @@
                 <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the use</td>
                 <td>/movies/:title</td>
                 <td>A JSON object holding data about a single movie, Example: {
-                    title: 'The Matrix',
-                    direktor: 'Lana Wachowski',
-                    id: '1',
-                    rating: '9/10',
-                    genre: 'SciFI'
+                   
                   }</td>
                 <td>GET</td>
                 <td></td>
@@ -80,21 +92,27 @@
                 <td>/users</td>
                 <td>A JSON object holding data about the User that was added, including an ID:
                     {
-                    name : "Fabian Michaelis", age : 37,
-                    U-ID: 1 
+                    U-ID: 1     
+                    Name : "Fabian Michaelis", 
+                    Birthdate: 01.02.1985, 
+                    Email: fabian@mail.com
+                
                    }</td>
                 <td>POST</td>
                 <td></td>
                 <td>A JSON object holding data about the new to add, structured like:
                     {
-                    name : "Fabian Michaelis", age : 37 
+                        U-ID: 1     
+                        Name : "Fabian Michaelis", 
+                        Birthdate: 01.02.1985, 
+                        Email: fabian@mail.com
                    }
                     </td>
             </tr>
             <tr>
                 <td>Allow users to update their user info (username)</td>
                 <td>/users/:name</td>
-                <td>A text message indicating the username was updated</td>
+                <td>Message: Your User is Up to Date</td>
                 <td>PUT</td>
                 <td></td>
                 <td>none</td>
@@ -114,7 +132,7 @@
             <tr>
                 <td>Allow users to remove a movie from their list of favorites</td>
                 <td>/users/:name/movies/:title</td>
-                <td>A text message indicating whether the Movie was successfully removed from the Favorit Movie List</td>
+                <td>A text message indicating whether the Movie was successfully removed from the Favorit Movie List like: The Movie was deleted</td>
                 <td>DELETE</td>
                 <td></td>
                 <td>none</td>
