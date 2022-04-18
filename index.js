@@ -232,3 +232,4 @@ app.post('/movies', (req, res) => {
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
+mongosh "mongodb+srv://cluster0.fg5ni.mongodb.net/fabiflix" --apiVersion 1 --username fabediesel
