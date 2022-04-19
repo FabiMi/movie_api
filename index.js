@@ -9,7 +9,7 @@ const Users = Models.User;
 const Directors = Models.Director;
 const Genres = Models.Genre;
 //mongoose.connect('mongodb://localhost:27017/myMovieDB',
-mongoose.connect('mongodb+srv://fabediesel:fabediesel@cluster0.fg5ni.mongodb.net/fabiflix?retryWrites=true&w=majority',
+mongoose.connect('process.env.CONNECTION_URI',
 {useNewURLParser: true, useUnifiedTopology: true});
 app.use(morgan('common'));
 app.use(bodyParser.json());
