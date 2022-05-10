@@ -140,10 +140,11 @@ app.get("/movies", function (req, res) {
 
 // Update a User by Name
   app.put('/users/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ Username: req.params.name }, { $set:
       {
         Username: req.body.Username,
-        Password: req.body.Password,
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       }
@@ -159,10 +160,20 @@ app.get("/movies", function (req, res) {
     });
   });
 
+  //Get one user by Username
+  app.get('/users/:name', (req, res) => {
+    Users.findOne({Username: req.params.name })
+    .then ((user) => { res.status(201).json(user);
+})
+      .catch((err) => { console.error(err);
+    res.status(500).send('Error: ' + err);
+    });
+  });
+
   //Add a Fav Movie to a Users List
-  app.post('/users/:name/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
+  app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.name  }, {
-      $push: { Fav_Movie: req.params.MovieID }
+      $push: { Fav_Movie: req.params.Id }
     },
     { new: true }, // This line makes sure that the updated document is returned
    (err, updatedUser) => {
@@ -176,13 +187,13 @@ app.get("/movies", function (req, res) {
   });
 
 //Delete a Fav Movie by a User
-  app.delete('/users/:name/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Users.findOneAndRemove({ Fav_Movie: req.params.title})
+  app.delete('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    Users.findOneAndRemove({ Username: req.params.name})
     .then((movie) => {
       if (!movie) {
-        res.status(400).send(req.params.Fav_Movie + ' was not found');
+        res.status(400).send(req.params.Id + ' was not found');
       } else {
-        res.status(200).send(req.params.Fav_Movie + ' was deleted.');
+        res.status(200).send(req.params.Id + ' was deleted.');
       }
     })
     .catch((err) => {
@@ -196,9 +207,9 @@ app.get("/movies", function (req, res) {
     Users.findOneAndRemove({ Username: req.params.name  })
     .then((user) => {
       if (!user) {
-        res.status(400).send(req.params.Name + ' was not found');
+        res.status(400).send(req.params.name + ' was not found');
       } else {
-        res.status(200).send(req.params.Name + ' was deleted.');
+        res.status(200).send(req.params.name + ' was deleted.');
       }
     })
     .catch((err) => {
