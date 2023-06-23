@@ -27,12 +27,12 @@ app.use(cors({
   }
 }));
 
-/* rest of code goes here*/
+/**  this function will be called when a request comes in to /auth**/
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
-
+//Get the default page
 app.get('/', (req, res) => { 
   res.send('This is my fantastic Movie App');
 });
@@ -110,6 +110,7 @@ app.get("/movies", function (req, res) {
   ], (req, res) => {
     let errors = validationResult(req);
 
+    //If the request body doesnt contain the required fields return the message below
     if(!errors.isEmpty()) {return res.status(422).json({errors: errors.array()});
   }
     let hashedPassword = Users.hashPassword(req.body.Password);
