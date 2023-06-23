@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const { check, validationResult } = require('express-validator');
 const cors = require('cors');
-let allowedOrigins = ['http://fabiflix.netlify.app, http://localhost:8090', 'http://testsite.com' ,'http://localhost:1234', 'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg', 'http://localhost:4200'];
+let allowedOrigins = ['http://fabiflix.netlify.app, http://localhost:8090', 'http://testsite.com' , 'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg', 'http://localhost:4200'];
 app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
