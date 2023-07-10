@@ -215,7 +215,7 @@ app.get('/users/:name', (req, res) => {
  */
 app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
-    $push: { Fav_Movie: req.params._id }
+    $push: { Fav_Movie: req.params.Id }
   },
     { new: true }, // This line makes sure that the updated document is returned
     (err, updatedUser) => {
@@ -234,7 +234,9 @@ app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fals
  * @param {string} endpoint - /users/:name/movies/:Id
  */
 app.delete('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.name }, {$pull: { Fav_Movie: req.params._id }})
+  Users.findOneAndUpdate({ Username: req.params.name }, 
+    {$pull: { Fav_Movie: req.params.Id }},
+    { new: true })
     .then((movie) => {
       if (!movie) {
         res.status(400).send(req.params.Id + ' was not found');
