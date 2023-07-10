@@ -234,7 +234,7 @@ app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fals
  * @param {string} endpoint - /users/:name/movies/:Id
  */
 app.delete('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOneAndRemove({ Username: req.params.name })
+  Users.findOneAndUpdate({ Username: req.params.name }, {$pull: { Fav_Movie: req.params.Id }})
     .then((movie) => {
       if (!movie) {
         res.status(400).send(req.params.Id + ' was not found');
