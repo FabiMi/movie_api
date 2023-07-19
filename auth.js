@@ -1,3 +1,31 @@
+/**
+ * @description Login route
+ * @name POST /login
+ * @function
+ * @example
+ * // Request data format
+ * {
+ *  "username": "",
+ *  "password": ""
+ * }
+ * @example
+ * // Response data format
+ * {
+ *  user: {
+ *    "_id": "",
+ *    "username": "",
+ *    "password": "",
+ *      "email": "",
+ *    "Birthday": "" ,
+ *    "FavoriteMovies": []
+ *  },
+ *  token: ""
+ * }
+ * @param {authentication} - Basic HTTP authentication (Username, Password)
+ * @param {Object} router - Express router object
+ */
+
+
 const jwtSecret = 'your_jwt_secret';
 const jwt = require('jsonwebtoken'),
 passport = require('passport');
@@ -10,6 +38,8 @@ let generateJWTToken = (user) => {
         algorithm: 'HS256'
  });
 }
+
+
 module.exports = (router) => {
     router.post('/login', (req,res) => {
         passport.authenticate('local', {session:false},
