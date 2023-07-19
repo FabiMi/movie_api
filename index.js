@@ -35,19 +35,37 @@ let auth = require('./auth')(app);
 const passport = require('passport');//Import the passport.js file
 require('./passport');
 
-/**
- * @description Get the default page
- * @method GET
- */
+/** 
+* @description  Get the welcome message
+* @name  GET / 
+* @function 
+* @example
+* // Request data format
+*  none
+* @example
+* // Response data format
+* "This is my fantastic Movie App"
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.get('/', (req, res) => {
   res.send('This is my fantastic Movie App');
 });
 
 
-/**
- * @description Get the secret url
- * @param {string} endpoint - /secreturl
- **/
+/** 
+* @description  Get to the secret URL
+* @name   GET /secreturl
+* @function
+* @example
+* // Request data format
+* none
+* @example
+* // Response data format
+* "This is a secret url with super top-secret content."
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.get('/secreturl', (req, res) => {
   res.send('This is a secret url with super top-secret content.');
 });
@@ -92,12 +110,34 @@ app.get("/movies", function (req, res) {
     });
 });
 
-
-/**
- * @description Get the Info of one Movie
- * @method GET
- * @param {string} endpoint - /movies/:title
- */
+/** 
+* @description  Get a movie by title
+* @name   GET /movies/:title
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* {
+*   "Title": "",
+*   "Description": "",
+*   "Genre": {
+*     "Name": "",
+*     "Description": "",
+*   },
+*   "Director": {
+*     "Name": "",
+*     "Bio": "",
+*   },
+*   "Actors": [""],
+*   "ImagePath": "",
+*   "Featured": Boolean,
+*   "Trailerpath": ""
+* }
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.title })
     .then((movies) => {
@@ -136,11 +176,24 @@ app.get('/genre/:name', passport.authenticate('jwt', { session: false }), (req, 
     });
 });
 
-/**
- * @description Get the list of all the users
- * @method GET
- * @param {string} endpoint - /users
- */
+/** 
+* @description  Get a director by name
+* @name  GET /director/:name  
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* { 
+*   "Name": "",
+*   "Bio": "",
+*   "Birth": "",
+*   "Death": ""
+* } 
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.get('/director/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Directors.find({ Name: req.params.name })
     .then((movies) => {
@@ -151,12 +204,31 @@ app.get('/director/:name', passport.authenticate('jwt', { session: false }), (re
       res.status(500).send('Error: ' + err);
     });
 });
-
 /**
- * @description Create a new user
- * @method POST
- * @param {string} endpoint - /users
- **/
+ * @description Create a user
+ * @name POST /users/:name
+ * @function
+ * @example
+ * // Request data format
+ * {
+ *  "Username": "",
+ *  "Password": "",
+ *  "Email": "",
+ *  "Birthday:" ""
+ * }
+ * @example
+ * // Response data format
+ * {
+ *  "_id": "",
+ *  "Username": "",
+ *  "Password": "",
+ *  "Email": "",
+ *  "Birthday": "",
+ *  "Fav_Movie": []
+ * }
+ * @param {authentication} - Bearen token (JWT)
+ */
+
 app.post('/users', [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -248,8 +320,23 @@ app.put('/users/:name', passport.authenticate('jwt', { session: false }), (req, 
 
 /**
  * @description Get a user by username
- * @method GET
- * @param {string} endpoint - /users/:name
+ * @name GET /users/:name
+ * @function
+ * @example
+ * // Request data format
+ * none
+ * @example
+ * // Response data format
+  * { 
+  * "_id": "",
+  * "Username": "",
+  * "Password": "",
+  * "Email": "",
+  * "Birthday": "",
+  *  "Fav_Movie": []
+  * }
+ * }
+ * @param {authentication} - Bearen token (JWT)
  */
 app.get('/users/:name', (req, res) => {
   Users.findOne({ Username: req.params.name })
@@ -262,11 +349,38 @@ app.get('/users/:name', (req, res) => {
     });
 });
 
-/**
- * @description Add a movie to a user's list of favorites
- * @method POST
- * @param {string} endpoint - /users/:name/movies/:Id
- */
+
+/** 
+* @description  Get a user by username
+* @name   GET /users/:name/movies
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* {
+*   "Username": "",
+*   "Password": "",
+*   "Email": "",
+*   "Birthday": "",
+*   "Fav_Movie": [
+*     {
+*       "Title": "",
+*       "Description": "",
+*       "Genre": {
+*         "Name": "",
+*         "Description": "",
+*       "Director": { 
+*       },  
+*       "Actors": [""],
+*       "ImagePath": "",
+*       "Featured": Boolean,
+*       "Trailerpath": ""
+*     }
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
     $push: { Fav_Movie: req.params.Id }
@@ -283,10 +397,36 @@ app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fals
 });
 
 /** 
- * @description Delete a movie from a user's list of favorites
- * @method DELETE
- * @param {string} endpoint - /users/:name/movies/:Id
- */
+* @description  delete a users favorite movie
+* @name   DELETE /users/:name/movies/:Id
+* @function
+* @example
+* // Request data format
+*  none
+* @example
+* // Response data format
+* { 
+*   "Username": "",
+*   "Password": "",
+*   "Email": "",
+*   "Birthday": "",
+*   "Fav_Movie": [
+*     {
+*       "Title": "",
+*       "Description": "",
+*       "Genre": {
+*         "Name": "",
+*         "Description": "",
+*       "Director": {
+*       },
+*       "Actors": [""],
+*       "ImagePath": "",
+*       "Featured": Boolean,
+*       "Trailerpath": ""
+*     }
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.delete('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
     $pull: { Fav_Movie: req.params.Id }
@@ -303,9 +443,17 @@ app.delete('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fa
 });
 
 /** 
- * @description Delete a user by username
- * @method DELETE
- * @param {string} endpoint - /users/:name
+* @description   delete a user by username
+* @name   DELETE /users/:name
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* "Username was deleted."
+* 
+* @param {authentication} - Bearen token (JWT)
 */
 app.delete('/users/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndRemove({ Username: req.params.name })
@@ -322,11 +470,19 @@ app.delete('/users/:name', passport.authenticate('jwt', { session: false }), (re
     });
 });
 
-/**
- * @description Get the documentation page
- * @method GET
- * @param {string} endpoint - /users
- **/
+/** 
+* @description  Get documentation
+* @name   GET /documentation
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* "THE the documentation page"
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.get('/documentation', (req, res) => {
   res.sendFile('/public/documentation.html', { root: __dirname });
 });
