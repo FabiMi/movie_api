@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const { check, validationResult } = require('express-validator');
 const cors = require('cors');
-let allowedOrigins = ['http://fabiflix.netlify.app',' http://localhost:8090', 'http://localhost:1234', 'http://testsite.com', 'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg', 'http://localhost:4200', 'https://fabian-movie-api.onrender.com', 'https://m.media-amazon.com', 'https://m.media-amazon.com/images/I/91mKjMkIMjL._AC_UY218_.jpg', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Washington_National_Cathedral_Crucifix_constructed_from_war_material.jpg/2560px-Washington_National_Cathedral_Crucifix_constructed_from_war_material.jpg', 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Heat_%281995%29_logo.png', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Sincity-logo.svg/2560px-Sincity-logo.svg.png', 'https://upload.wikimedia.org/wikipedia/de/thumb/2/20/Matrix-logo.svg/2880px-Matrix-logo.svg.png', 'youtube.com', 'https://fabimi.github.io', 'https://github.com'];
+let allowedOrigins = ['http://fabiflix.netlify.app', ' http://localhost:8090', 'http://localhost:1234', 'http://testsite.com', 'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg', 'http://localhost:4200', 'https://fabian-movie-api.onrender.com', 'https://m.media-amazon.com', 'https://m.media-amazon.com/images/I/91mKjMkIMjL._AC_UY218_.jpg', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Washington_National_Cathedral_Crucifix_constructed_from_war_material.jpg/2560px-Washington_National_Cathedral_Crucifix_constructed_from_war_material.jpg', 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Heat_%281995%29_logo.png', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Sincity-logo.svg/2560px-Sincity-logo.svg.png', 'https://upload.wikimedia.org/wikipedia/de/thumb/2/20/Matrix-logo.svg/2880px-Matrix-logo.svg.png', 'youtube.com', 'https://fabimi.github.io', 'https://github.com'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
@@ -27,17 +27,14 @@ app.use(cors({
   }
 }));
 
-/**
- * @description Import the auth.js file
- * @type {auth}
- */
+
 let auth = require('./auth')(app);
 const passport = require('passport');//Import the passport.js file
 require('./passport');
 
 /** 
-* @description  Get the welcome message
-* @name  GET / 
+* @description Get the welcome message
+* @name GET / 
 * @function 
 * @example
 * // Request data format
@@ -46,7 +43,6 @@ require('./passport');
 * // Response data format
 * "This is my fantastic Movie App"
 * 
-* @param {authentication} - Bearen token (JWT)
 */
 app.get('/', (req, res) => {
   res.send('This is my fantastic Movie App');
@@ -54,8 +50,8 @@ app.get('/', (req, res) => {
 
 
 /** 
-* @description  Get to the secret URL
-* @name   GET /secreturl
+* @description Get to the secret URL
+* @name GET /secreturl
 * @function
 * @example
 * // Request data format
@@ -63,8 +59,6 @@ app.get('/', (req, res) => {
 * @example
 * // Response data format
 * "This is a secret url with super top-secret content."
-* 
-* @param {authentication} - Bearen token (JWT)
 */
 app.get('/secreturl', (req, res) => {
   res.send('This is a secret url with super top-secret content.');
@@ -111,8 +105,8 @@ app.get("/movies", function (req, res) {
 });
 
 /** 
-* @description  Get a movie by title
-* @name   GET /movies/:title
+* @description Get a movie by title
+* @name GET /movies/:title
 * @function
 * @example
 * // Request data format
@@ -177,8 +171,8 @@ app.get('/genre/:name', passport.authenticate('jwt', { session: false }), (req, 
 });
 
 /** 
-* @description  Get a director by name
-* @name  GET /director/:name  
+* @description Get a director by name
+* @name GET /director/:name  
 * @function
 * @example
 * // Request data format
@@ -336,7 +330,7 @@ app.put('/users/:name', passport.authenticate('jwt', { session: false }), (req, 
   *  "Fav_Movie": []
   * }
  * }
- * @param {authentication} - Bearen token (JWT)
+ * @param {authentication} - 
  */
 app.get('/users/:name', (req, res) => {
   Users.findOne({ Username: req.params.name })
@@ -351,8 +345,8 @@ app.get('/users/:name', (req, res) => {
 
 
 /** 
-* @description  Get a user by username
-* @name   GET /users/:name/movies
+* @description Get a user by username
+* @name POST /users/:name/movies
 * @function
 * @example
 * // Request data format
@@ -397,8 +391,8 @@ app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fals
 });
 
 /** 
-* @description  delete a users favorite movie
-* @name   DELETE /users/:name/movies/:Id
+* @description delete a users favorite movie
+* @name DELETE /users/:name/movies/:Id
 * @function
 * @example
 * // Request data format
@@ -443,8 +437,8 @@ app.delete('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fa
 });
 
 /** 
-* @description   delete a user by username
-* @name   DELETE /users/:name
+* @description delete a user by username
+* @name DELETE /users/:name
 * @function
 * @example
 * // Request data format
@@ -471,8 +465,8 @@ app.delete('/users/:name', passport.authenticate('jwt', { session: false }), (re
 });
 
 /** 
-* @description  Get documentation
-* @name   GET /documentation
+* @description Get documentation
+* @name GET /documentation
 * @function
 * @example
 * // Request data format

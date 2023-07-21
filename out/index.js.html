@@ -42,7 +42,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const { check, validationResult } = require('express-validator');
 const cors = require('cors');
-let allowedOrigins = ['http://fabiflix.netlify.app, http://localhost:8090', 'http://testsite.com', 'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg', 'http://localhost:4200', 'https://fabian-movie-api.onrender.com', 'https://m.media-amazon.com', 'https://m.media-amazon.com/images/I/91mKjMkIMjL._AC_UY218_.jpg', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Washington_National_Cathedral_Crucifix_constructed_from_war_material.jpg/2560px-Washington_National_Cathedral_Crucifix_constructed_from_war_material.jpg', 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Heat_%281995%29_logo.png', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Sincity-logo.svg/2560px-Sincity-logo.svg.png', 'https://upload.wikimedia.org/wikipedia/de/thumb/2/20/Matrix-logo.svg/2880px-Matrix-logo.svg.png', 'youtube.com', 'https://fabimi.github.io', 'https://github.com'];
+let allowedOrigins = ['http://fabiflix.netlify.app', ' http://localhost:8090', 'http://localhost:1234', 'http://testsite.com', 'https://upload.wikimedia.org/wikipedia/en/8/8a/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29.jpg', 'http://localhost:4200', 'https://fabian-movie-api.onrender.com', 'https://m.media-amazon.com', 'https://m.media-amazon.com/images/I/91mKjMkIMjL._AC_UY218_.jpg', 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Washington_National_Cathedral_Crucifix_constructed_from_war_material.jpg/2560px-Washington_National_Cathedral_Crucifix_constructed_from_war_material.jpg', 'https://upload.wikimedia.org/wikipedia/commons/c/ca/Heat_%281995%29_logo.png', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Sincity-logo.svg/2560px-Sincity-logo.svg.png', 'https://upload.wikimedia.org/wikipedia/de/thumb/2/20/Matrix-logo.svg/2880px-Matrix-logo.svg.png', 'youtube.com', 'https://fabimi.github.io', 'https://github.com'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
@@ -55,27 +55,39 @@ app.use(cors({
   }
 }));
 
-/**
- * @description Import the auth.js file
- * @type {auth}
- */
+
 let auth = require('./auth')(app);
 const passport = require('passport');//Import the passport.js file
 require('./passport');
 
-/**
- * @description Get the default page
- * @method GET
- */
+/** 
+* @description Get the welcome message
+* @name GET / 
+* @function 
+* @example
+* // Request data format
+*  none
+* @example
+* // Response data format
+* "This is my fantastic Movie App"
+* 
+*/
 app.get('/', (req, res) => {
   res.send('This is my fantastic Movie App');
 });
 
 
-/**
- * @description Get the secret url
- * @param {string} endpoint - /secreturl
- **/
+/** 
+* @description Get to the secret URL
+* @name GET /secreturl
+* @function
+* @example
+* // Request data format
+* none
+* @example
+* // Response data format
+* "This is a secret url with super top-secret content."
+*/
 app.get('/secreturl', (req, res) => {
   res.send('This is a secret url with super top-secret content.');
 });
@@ -120,12 +132,34 @@ app.get("/movies", function (req, res) {
     });
 });
 
-
-/**
- * @description Get the Info of one Movie
- * @method GET
- * @param {string} endpoint - /movies/:title
- */
+/** 
+* @description Get a movie by title
+* @name GET /movies/:title
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* {
+*   "Title": "",
+*   "Description": "",
+*   "Genre": {
+*     "Name": "",
+*     "Description": "",
+*   },
+*   "Director": {
+*     "Name": "",
+*     "Bio": "",
+*   },
+*   "Actors": [""],
+*   "ImagePath": "",
+*   "Featured": Boolean,
+*   "Trailerpath": ""
+* }
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.title })
     .then((movies) => {
@@ -164,11 +198,24 @@ app.get('/genre/:name', passport.authenticate('jwt', { session: false }), (req, 
     });
 });
 
-/**
- * @description Get the list of all the users
- * @method GET
- * @param {string} endpoint - /users
- */
+/** 
+* @description Get a director by name
+* @name GET /director/:name  
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* { 
+*   "Name": "",
+*   "Bio": "",
+*   "Birth": "",
+*   "Death": ""
+* } 
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.get('/director/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Directors.find({ Name: req.params.name })
     .then((movies) => {
@@ -179,12 +226,31 @@ app.get('/director/:name', passport.authenticate('jwt', { session: false }), (re
       res.status(500).send('Error: ' + err);
     });
 });
-
 /**
- * @description Create a new user
- * @method POST
- * @param {string} endpoint - /users
- **/
+ * @description Create a user
+ * @name POST /users/:name
+ * @function
+ * @example
+ * // Request data format
+ * {
+ *  "Username": "",
+ *  "Password": "",
+ *  "Email": "",
+ *  "Birthday:" ""
+ * }
+ * @example
+ * // Response data format
+ * {
+ *  "_id": "",
+ *  "Username": "",
+ *  "Password": "",
+ *  "Email": "",
+ *  "Birthday": "",
+ *  "Fav_Movie": []
+ * }
+ * @param {authentication} - Bearen token (JWT)
+ */
+
 app.post('/users', [
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -276,8 +342,23 @@ app.put('/users/:name', passport.authenticate('jwt', { session: false }), (req, 
 
 /**
  * @description Get a user by username
- * @method GET
- * @param {string} endpoint - /users/:name
+ * @name GET /users/:name
+ * @function
+ * @example
+ * // Request data format
+ * none
+ * @example
+ * // Response data format
+  * { 
+  * "_id": "",
+  * "Username": "",
+  * "Password": "",
+  * "Email": "",
+  * "Birthday": "",
+  *  "Fav_Movie": []
+  * }
+ * }
+ * @param {authentication} - 
  */
 app.get('/users/:name', (req, res) => {
   Users.findOne({ Username: req.params.name })
@@ -290,11 +371,38 @@ app.get('/users/:name', (req, res) => {
     });
 });
 
-/**
- * @description Add a movie to a user's list of favorites
- * @method POST
- * @param {string} endpoint - /users/:name/movies/:Id
- */
+
+/** 
+* @description Get a user by username
+* @name POST /users/:name/movies
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* {
+*   "Username": "",
+*   "Password": "",
+*   "Email": "",
+*   "Birthday": "",
+*   "Fav_Movie": [
+*     {
+*       "Title": "",
+*       "Description": "",
+*       "Genre": {
+*         "Name": "",
+*         "Description": "",
+*       "Director": { 
+*       },  
+*       "Actors": [""],
+*       "ImagePath": "",
+*       "Featured": Boolean,
+*       "Trailerpath": ""
+*     }
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
     $push: { Fav_Movie: req.params.Id }
@@ -311,10 +419,36 @@ app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fals
 });
 
 /** 
- * @description Delete a movie from a user's list of favorites
- * @method DELETE
- * @param {string} endpoint - /users/:name/movies/:Id
- */
+* @description delete a users favorite movie
+* @name DELETE /users/:name/movies/:Id
+* @function
+* @example
+* // Request data format
+*  none
+* @example
+* // Response data format
+* { 
+*   "Username": "",
+*   "Password": "",
+*   "Email": "",
+*   "Birthday": "",
+*   "Fav_Movie": [
+*     {
+*       "Title": "",
+*       "Description": "",
+*       "Genre": {
+*         "Name": "",
+*         "Description": "",
+*       "Director": {
+*       },
+*       "Actors": [""],
+*       "ImagePath": "",
+*       "Featured": Boolean,
+*       "Trailerpath": ""
+*     }
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.delete('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.name }, {
     $pull: { Fav_Movie: req.params.Id }
@@ -331,9 +465,17 @@ app.delete('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fa
 });
 
 /** 
- * @description Delete a user by username
- * @method DELETE
- * @param {string} endpoint - /users/:name
+* @description delete a user by username
+* @name DELETE /users/:name
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* "Username was deleted."
+* 
+* @param {authentication} - Bearen token (JWT)
 */
 app.delete('/users/:name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndRemove({ Username: req.params.name })
@@ -350,11 +492,19 @@ app.delete('/users/:name', passport.authenticate('jwt', { session: false }), (re
     });
 });
 
-/**
- * @description Get the documentation page
- * @method GET
- * @param {string} endpoint - /users
- **/
+/** 
+* @description Get documentation
+* @name GET /documentation
+* @function
+* @example
+* // Request data format
+*   none
+* @example
+* // Response data format
+* "THE the documentation page"
+* 
+* @param {authentication} - Bearen token (JWT)
+*/
 app.get('/documentation', (req, res) => {
   res.sendFile('/public/documentation.html', { root: __dirname });
 });
@@ -382,13 +532,13 @@ app.listen(port, '0.0.0.0', () => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#DELETE">DELETE</a></li><li><a href="global.html#GET">GET</a></li><li><a href="global.html#GET/genre/:name">GET /genre/:name</a></li><li><a href="global.html#GET/movies">GET /movies</a></li><li><a href="global.html#POST">POST</a></li><li><a href="global.html#POST/login">POST /login</a></li><li><a href="global.html#PUT/users/:name">PUT /users/:name</a></li><li><a href="global.html#auth">auth</a></li><li><a href="global.html#port">port</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#DELETE/users/:name">DELETE /users/:name</a></li><li><a href="global.html#DELETE/users/:name/movies/:Id">DELETE /users/:name/movies/:Id</a></li><li><a href="global.html#GET/">GET /</a></li><li><a href="global.html#GET/director/:name">GET /director/:name</a></li><li><a href="global.html#GET/documentation">GET /documentation</a></li><li><a href="global.html#GET/genre/:name">GET /genre/:name</a></li><li><a href="global.html#GET/movies">GET /movies</a></li><li><a href="global.html#GET/movies/:title">GET /movies/:title</a></li><li><a href="global.html#GET/secreturl">GET /secreturl</a></li><li><a href="global.html#GET/users/:name">GET /users/:name</a></li><li><a href="global.html#POST/login">POST /login</a></li><li><a href="global.html#POST/users/:name">POST /users/:name</a></li><li><a href="global.html#POST/users/:name/movies">POST /users/:name/movies</a></li><li><a href="global.html#PUT/users/:name">PUT /users/:name</a></li><li><a href="global.html#port">port</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Jul 19 2023 15:37:33 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Jul 21 2023 18:01:12 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
