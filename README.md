@@ -1,0 +1,81 @@
+Movie API Installation README
+
+Description
+
+This is the installation README for the "movie_api" project. This API allows you to manage movies, users, and authentication for https://github.com/FabiMi/MyFlixClient and https://github.com/FabiMi/myFlix-Angular-client. It is built using Node.js, Express, and MongoDB, and includes various dependencies to handle authentication, data validation, and more. Check out the documentation for more... 
+
+Prerequisites
+
+Before you begin, make sure you have the following installed on your system:
+
+Node.js: Download Node.js
+MongoDB: Install MongoDB
+Installation
+
+To get started with the "movie_api" project, follow these steps:
+
+Clone the repository:
+bash
+Copy code
+git clone https://github.com/FabiMi/movie_api.git
+Change to the project directory:
+bash
+Copy code
+cd movie_api
+Install the required dependencies:
+bash
+Copy code
+npm install
+Configuration
+
+Before running the API, you need to configure some environment variables. Create a .env file in the root directory of the project and add the following variables:
+
+plaintext
+Copy code
+MONGODB_URI=your_mongodb_connection_string
+SECRET_KEY=your_secret_key_for_jwt
+Replace your_mongodb_connection_string with the connection string to your MongoDB database and your_secret_key_for_jwt with a secure secret key for JSON Web Token (JWT) authentication.
+
+Database Setup
+
+Ensure that your MongoDB server is running. If it's not running as a service, start it using the following command:
+
+bash
+Copy code
+mongod
+Running the Application
+
+Once everything is set up and configured, you can start the API server using the following command:
+
+bash
+Copy code
+npm start
+This will launch the server at http://localhost:3000.
+
+API Documentation
+
+For API documentation and available endpoints, you can visit the Movie API GitHub repository.
+
+Testing
+
+To run the tests for the project, use the following command:
+
+bash
+Copy code
+npm test
+Linting
+
+To lint the code using ESLint, run the following command:
+
+bash
+Copy code
+npm run lint
+Issues and Contributions
+
+If you encounter any issues with the API or want to contribute to the project, please visit the Issue Tracker on GitHub.
+
+License
+
+This project is licensed under the ISC License. See the LICENSE file for details.
+
+Feel free to update the author and description fields according to your project's details. Additionally, make sure to provide the actual MongoDB connection string and a secure JWT secret key in the .env file for proper functionality.
