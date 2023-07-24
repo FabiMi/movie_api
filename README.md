@@ -5,7 +5,7 @@
 This API allows you to manage movies, users, and authentication for MyFlixClient and myFlix-Angular-client. It is built using Node.js, Express, and MongoDB, and includes various dependencies to handle authentication, data validation, and more. Check out the documentation for more...
 
 
-![](./Screenshots/Screenshot 2023-07-22 at 16.25.37.png)
+![](https://github.com/FabiMi/movie_api/blob/main/Screenshots/Screenshot%202023-07-22%20at%2016.25.37.png)
 
 ## [Documentations](https://movie-api-evho.onrender.com/documentation)
 ## Prerequisites
