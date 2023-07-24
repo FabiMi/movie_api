@@ -7,7 +7,7 @@ This API allows you to manage movies, users, and authentication for MyFlixClient
 
 ![](Screenshots/Screenshot 2023-07-22 at 16.25.37.png)
 
-![Documentations] (https://movie-api-evho.onrender.com/documentation)
+## ![Documentations](https://movie-api-evho.onrender.com/documentation)
 ## Prerequisites
 
 Before you begin, make sure you have the following installed on your system:
