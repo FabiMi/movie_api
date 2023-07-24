@@ -345,8 +345,8 @@ app.get('/users/:name', (req, res) => {
 
 
 /** 
-* @description Get a user by username
-* @name POST /users/:name/movies
+* @description add a movie to a users favorite movie list
+* @name POST /users/:name/movies/:Id
 * @function
 * @example
 * // Request data format
@@ -360,19 +360,8 @@ app.get('/users/:name', (req, res) => {
 *   "Birthday": "",
 *   "Fav_Movie": [
 *     {
-*       "Title": "",
-*       "Description": "",
-*       "Genre": {
-*         "Name": "",
-*         "Description": "",
-*       "Director": { 
-*       },  
-*       "Actors": [""],
-*       "ImagePath": "",
-*       "Featured": Boolean,
-*       "Trailerpath": ""
+*       Id: ""
 *     }
-* 
 * @param {authentication} - Bearen token (JWT)
 */
 app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -406,17 +395,7 @@ app.post('/users/:name/movies/:Id', passport.authenticate('jwt', { session: fals
 *   "Birthday": "",
 *   "Fav_Movie": [
 *     {
-*       "Title": "",
-*       "Description": "",
-*       "Genre": {
-*         "Name": "",
-*         "Description": "",
-*       "Director": {
-*       },
-*       "Actors": [""],
-*       "ImagePath": "",
-*       "Featured": Boolean,
-*       "Trailerpath": ""
+*      Id: ""
 *     }
 * 
 * @param {authentication} - Bearen token (JWT)
